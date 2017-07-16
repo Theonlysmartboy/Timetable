@@ -15,7 +15,7 @@ if ($result->num_rows > 0) {
         echo 'Timetable has been added successfully';
         
     } else {
-        //echo 'Timetable has not been added please try again';
+        echo 'Timetable has not been added please try again';
         die($conn->error);
        
     }
