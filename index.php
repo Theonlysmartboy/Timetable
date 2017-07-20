@@ -79,6 +79,16 @@ if($user->isLoggedIn()){
                         echo    "</li>";
                         echo "<li>";
                         echo "<a href='NewTimetable.php'>New Timetable</a>";
+                        echo "</li>";
+                        echo "<li>";
+                        echo "<a href='Lecture halls.php'>Lecture Halls</a>";
+                        echo "</li>";
+                        echo "<li>";
+                        echo "<a href='Lecturers.php'>Lecturers</a>";
+                        echo "</li>";
+                        echo "<li>";
+                        echo "<a href='Units.php'>Units</a>";
+                        echo "</li>";
                     }else{
                     	//Do nothing
                     }
