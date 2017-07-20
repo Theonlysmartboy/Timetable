@@ -113,9 +113,10 @@ label {
     transition: all 0.25s ease;
     -webkit-backface-visibility: hidden;
     pointer-events: none;
-    font-size: 22px;
+    font-size: 16px;
 }
 label .req {
+    font-size: 11px;
     margin: 2px;
     color: #1ab188;
 }
