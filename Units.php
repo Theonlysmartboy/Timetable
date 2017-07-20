@@ -5,7 +5,7 @@ require 'CORE/init.php';
 <html>
     <head>
         <title>Units</title>
-        <link rel="shortcut icon" href="../resources/images/student-portal_icon.png"  type="image/x-icon"/>
+       <link rel="shortcut icon" href="images/timetable-menu-button-sm.png" type="image/x-icon"/>
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/Appearance.css" rel="stylesheet" type="text/css"/>
@@ -34,8 +34,8 @@ require 'CORE/init.php';
             <div class="col-sm-9 col-md-9 well">
                 <div class="form">
                     <ul class="tab-group">
-                        <li class="tab"><a href="#addschools">Add schools</a></li>
-                        <li class="tab active"><a href="#viewschools">View Schools</a></li>
+                        <li class="tab"><a href="#addschools">Add Units</a></li>
+                        <li class="tab active"><a href="#viewschools">View Units</a></li>
                     </ul>
                     <div class="tab-content">
                         <div id="viewschools">   
@@ -45,7 +45,7 @@ require 'CORE/init.php';
                                     . "JOIN lecturers on units.Lecturer=lecturers.Pf_No "
                                     . "ORDER BY programs.Prog_name ASC ");
                             ?>
-                            <table width="400" border="0" cellspacing="1" cellpadding="0">
+                            <table width="500" border="0" cellspacing="1" cellpadding="0">
                                 <tr>
                                     <td>
                                         <form name="form1" method="post" action="">
@@ -63,6 +63,7 @@ require 'CORE/init.php';
                                                 <?php
                                                 $a = 1;
                                                 while ($row = mysqli_fetch_array($result)) {
+                                                    ;
                                                     ?>
                                                     <tbody>
                                                         <tr>
@@ -71,7 +72,7 @@ require 'CORE/init.php';
                                                             <td><?php echo $row['Unit_Code']; ?></td>
                                                             <td><?php echo $row['Unit_Name']; ?></td>
                                                             <td><?php echo $row['Title'] . " " . $row['First_Name'] . " " . $row['Middle_Name'] . " " . $row['Last_Name']; ?></td>
-                                                            <td><a href='../Controller/deletesc.php?id=<?php echo $row['Unit_Code']; ?>' class="btn btn-block btn-danger"> delete</a></td>
+                                                            <td><a href='functions/deleteunit.php?id=<?php echo $row['Unit_Code']; ?>' class="btn btn-block btn-danger"> delete</a></td>
                                                         </tr>
                                                         <?php
                                                     }
@@ -86,21 +87,54 @@ require 'CORE/init.php';
                             ?>
                         </div>
                         <div id="addschools">   
-                            <h1 style="color: #FFFFFF;">Enter all the relevant details here</h1>
+                           <h1 style="color: #FFFFFF;">Enter all the relevant details here</h1>
 
-                            <form action="../Controller/addsc.php" method="post">
+                           <form action="functions/addunit.php" method="post">
 
-                                <div class="top-row">
-                                    <div class="form-group field-wrap">
-                                        <label>Name<span class="req">*ex education</span>
-                                        </label>
-                                        <input type="text" required autocomplete="on" name='scname' style="color: #FFFFFF;" />
-                                    </div>
-                                </div>
-                                <div class="form-group field-wrap">
-                                    <button type="submit" class="button button-block" name="register" />SUBMIT</button>
-                                </div>
-                            </form>
+                        <div class="top-row">
+                            <div class="form-group field-wrap">
+                                <label>Unit full Name<span class="req">*ex Fundamentals education</span>
+                                </label>
+                                <input type="text" required autocomplete="on" name='name' style="color: #FFFFFF;" />
+                            </div>
+                            <div class="form-group field-wrap">
+                                <label>Unit Code <span class="req">*ex UCI 101</span>
+                                </label>
+                                <input type="text" required autocomplete="on" name='code' style="color: #FFFFFF;" />
+                            </div>
+                        </div>
+                        <div class="top-row">
+                             <div class="form-group field-wrap">
+                        <label for="prog">Program</label>
+                        <select name="prog" id="prog" class="form-control">
+                            <option value="Select School">Select Program</option>
+                            <?php
+                            require 'CORE/init.php';
+                            $result2 = $conn->query("SELECT * FROM programs") or die($conn->error);
+                            while ($row = mysqli_fetch_array($result2)) {
+                                echo "<option value='" . $row['Prog_Id'] . "'>" . $row['Prog_name'] ; "</option>";
+                            }
+                            ?>        
+                        </select>
+                    </div>
+                            <div class="form-group field-wrap">
+                        <label for="lec">Lecturer</label>
+                        <select name="lec" id="lec" class="form-control">
+                            <option value="Select School">Select Lecturer</option>
+                            <?php
+                            require 'CORE/init.php';
+                            $result1 = $conn->query("SELECT * FROM lecturers") or die($conn->error);
+                            while ($row = mysqli_fetch_array($result1)) {
+                                echo "<option value='" . $row['Pf_No'] . "'>" . $row['Title'] . " " . $row['First_Name'] . " " . $row['Middle_Name'] . " " . $row['Last_Name']; "</option>";
+                            }
+                            ?>        
+                        </select>
+                    </div>
+                        </div>
+                        <div class="form-group field-wrap">
+                            <button type="submit" class="button button-block" name="register" />SUBMIT</button>
+                        </div>
+                    </form>
                         </div>  
                     </div><!-- tab-content -->
                 </div> <!-- /form -->
@@ -109,5 +143,5 @@ require 'CORE/init.php';
         <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
         <script src="js/index.js" type="text/javascript"></script>
         <script src="js/Copyright.js" type="text/javascript"></script>
-            </body>
+    </body>
 </html>
