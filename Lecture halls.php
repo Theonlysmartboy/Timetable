@@ -4,7 +4,7 @@ require 'CORE/init.php';
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Units</title>
+        <title>Halls</title>
         <link rel="shortcut icon" href="images/timetable-menu-button-sm.png" type="image/x-icon"/>
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
