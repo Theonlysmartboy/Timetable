@@ -62,7 +62,6 @@ require 'CORE/init.php';
                                                 <?php
                                                 $a = 1;
                                                 while ($row = mysqli_fetch_array($result)) {
-                                                    ;
                                                     ?>
                                                     <tbody>
                                                         <tr>
