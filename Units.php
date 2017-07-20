@@ -5,7 +5,7 @@ require 'CORE/init.php';
 <html>
     <head>
         <title>Units</title>
-       <link rel="shortcut icon" href="images/timetable-menu-button-sm.png" type="image/x-icon"/>
+        <link rel="shortcut icon" href="images/timetable-menu-button-sm.png" type="image/x-icon"/>
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/Appearance.css" rel="stylesheet" type="text/css"/>
@@ -24,10 +24,9 @@ require 'CORE/init.php';
                 </div>
                 <div class="buttons">
                     <ul style="list-style: none; float: contour;">
-                        <li style="margin-bottom: 10px;"><a href="Admin.php"><button class="btn btn-block bg-primary">Back</button></a></li>
-                        <li style="margin-bottom: 10px; margin-top: 10px;"><a href="manage_admins.php"><button class="btn btn-block btn-success">Manage Admin </button></a></li>
-                        <li><a href="manage_departments.php"><button class="btn btn-block btn-success">Manage Departments </button></a></li>
-                        <li style="margin-top: 10px;"> <a href="../Controller/logout.php"><button class="btn btn-block btn-danger">LOG OUT</button></a></li>
+                        <li style="margin-bottom: 10px;"><a href="index.php"><button class="btn btn-block bg-primary">Back</button></a></li>
+                        <li style="margin-bottom: 10px; margin-top: 10px;"><a href="Lecture halls.php"><button class="btn btn-block btn-success">Manage Lecture Halls </button></a></li>
+                        <li><a href="Lecturers.php"><button class="btn btn-block btn-success">Manage Lecturers </button></a></li>
                     </ul>
                 </div>
             </div> 
@@ -87,54 +86,56 @@ require 'CORE/init.php';
                             ?>
                         </div>
                         <div id="addschools">   
-                           <h1 style="color: #FFFFFF;">Enter all the relevant details here</h1>
+                            <h1 style="color: #FFFFFF;">Enter all the relevant details here</h1>
 
-                           <form action="functions/addunit.php" method="post">
+                            <form action="functions/addunit.php" method="post">
 
-                        <div class="top-row">
-                            <div class="form-group field-wrap">
-                                <label>Unit full Name<span class="req">*ex Fundamentals education</span>
-                                </label>
-                                <input type="text" required autocomplete="on" name='name' style="color: #FFFFFF;" />
-                            </div>
-                            <div class="form-group field-wrap">
-                                <label>Unit Code <span class="req">*ex UCI 101</span>
-                                </label>
-                                <input type="text" required autocomplete="on" name='code' style="color: #FFFFFF;" />
-                            </div>
-                        </div>
-                        <div class="top-row">
-                             <div class="form-group field-wrap">
-                        <label for="prog">Program</label>
-                        <select name="prog" id="prog" class="form-control">
-                            <option value="Select School">Select Program</option>
-                            <?php
-                            require 'CORE/init.php';
-                            $result2 = $conn->query("SELECT * FROM programs") or die($conn->error);
-                            while ($row = mysqli_fetch_array($result2)) {
-                                echo "<option value='" . $row['Prog_Id'] . "'>" . $row['Prog_name'] ; "</option>";
-                            }
-                            ?>        
-                        </select>
-                    </div>
-                            <div class="form-group field-wrap">
-                        <label for="lec">Lecturer</label>
-                        <select name="lec" id="lec" class="form-control">
-                            <option value="Select School">Select Lecturer</option>
-                            <?php
-                            require 'CORE/init.php';
-                            $result1 = $conn->query("SELECT * FROM lecturers") or die($conn->error);
-                            while ($row = mysqli_fetch_array($result1)) {
-                                echo "<option value='" . $row['Pf_No'] . "'>" . $row['Title'] . " " . $row['First_Name'] . " " . $row['Middle_Name'] . " " . $row['Last_Name']; "</option>";
-                            }
-                            ?>        
-                        </select>
-                    </div>
-                        </div>
-                        <div class="form-group field-wrap">
-                            <button type="submit" class="button button-block" name="register" />SUBMIT</button>
-                        </div>
-                    </form>
+                                <div class="top-row">
+                                    <div class="form-group field-wrap">
+                                        <label>Unit full Name<span class="req">*ex Fundamentals education</span>
+                                        </label>
+                                        <input type="text" required autocomplete="on" name='name' style="color: #FFFFFF;" />
+                                    </div>
+                                    <div class="form-group field-wrap">
+                                        <label>Unit Code <span class="req">*ex UCI 101</span>
+                                        </label>
+                                        <input type="text" required autocomplete="on" name='code' style="color: #FFFFFF;" />
+                                    </div>
+                                </div>
+                                <div class="top-row">
+                                    <div class="form-group field-wrap">
+                                        <label for="prog">Program</label>
+                                        <select name="prog" id="prog" class="form-control">
+                                            <option value="Select School">Select Program</option>
+                                            <?php
+                                            require 'CORE/init.php';
+                                            $result2 = $conn->query("SELECT * FROM programs") or die($conn->error);
+                                            while ($row = mysqli_fetch_array($result2)) {
+                                                echo "<option value='" . $row['Prog_Id'] . "'>" . $row['Prog_name'];
+                                                "</option>";
+                                            }
+                                            ?>        
+                                        </select>
+                                    </div>
+                                    <div class="form-group field-wrap">
+                                        <label for="lec">Lecturer</label>
+                                        <select name="lec" id="lec" class="form-control">
+                                            <option value="Select School">Select Lecturer</option>
+                                            <?php
+                                            require 'CORE/init.php';
+                                            $result1 = $conn->query("SELECT * FROM lecturers") or die($conn->error);
+                                            while ($row = mysqli_fetch_array($result1)) {
+                                                echo "<option value='" . $row['Pf_No'] . "'>" . $row['Title'] . " " . $row['First_Name'] . " " . $row['Middle_Name'] . " " . $row['Last_Name'];
+                                                "</option>";
+                                            }
+                                            ?>        
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group field-wrap">
+                                    <button type="submit" class="button button-block" name="register" />SUBMIT</button>
+                                </div>
+                            </form>
                         </div>  
                     </div><!-- tab-content -->
                 </div> <!-- /form -->
