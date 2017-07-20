@@ -84,12 +84,13 @@ if ($user->hasPermission('admin')) {
                             <tr class='bg-primary'><th>Day/Time</th>
                                 <?php
                                 $result = $conn->query("SELECT * FROM `sessions` ");
-                                $result1 = $conn->query("select timetable.Id,schedules.Day,timetable.Unit,lecture_halls.Name,lecturers.Title,lecturers.First_Name,lecturers.Middle_Name from timetable JOIN units on timetable.Unit=units.Unit_Code join lecturers on units.Lecturer=lecturers.Pf_No join schedules on timetable.Schedule=schedules.Id JOIN lecture_halls ON schedules.Lecture_Hall=lecture_halls.Id join sessions on schedules.Session=sessions.Id ");
+                               // $result1 = $conn->query("select timetable.Id,schedules.Day,timetable.Unit,lecture_halls.Name,lecturers.Title,lecturers.First_Name,lecturers.Middle_Name from timetable JOIN units on timetable.Unit=units.Unit_Code join lecturers on units.Lecturer=lecturers.Pf_No join schedules on timetable.Schedule=schedules.Id JOIN lecture_halls ON schedules.Lecture_Hall=lecture_halls.Id join sessions on schedules.Session=sessions.Id ");
                                 $date = $conn->query("SELECT MAX(Day) FROM schedules");
                                 $max = $date->fetch_assoc();
                                 $maxdate = implode(" ", $max);
                                 while ($row = mysqli_fetch_array($result)) {
                                     echo "<th>" . $row['Time'] . "</th>";
+                                   
                                 }
                                 ?>
                             </tr>         
@@ -97,7 +98,7 @@ if ($user->hasPermission('admin')) {
                         <tbody>
 
                             <?php
-                            while ($row = mysqli_fetch_array($result1)) {
+                            /*while ($row = mysqli_fetch_array($result1)) {
                                 echo "<tr>";
                                 for ($x = 0; $x < $maxdate-1; $x++) {
                                     echo "<td><b>" . jddayofweek($x, 1) . "</b></td>";
@@ -105,7 +106,18 @@ if ($user->hasPermission('admin')) {
                                 }
                                 echo "</tr>";
                             }
-                            ?>
+                            */
+                            while ($row = mysqli_fetch_array($result)) {  
+                             $thetime=$row['Time'];
+$result1 = $conn->query("select timetable.Id,schedules.Day,timetable.Unit,lecture_halls.Name,lecturers.Title,lecturers.First_Name,"
+        . "lecturers.Middle_Name from timetable JOIN units on timetable.Unit=units.Unit_Code join lecturers on units.Lecturer=lecturers.Pf_No"
+        . " join schedules on timetable.Schedule=schedules.Id JOIN lecture_halls ON schedules.Lecture_Hall=lecture_halls.Id "
+        . "join sessions on schedules.Session=sessions.Id  where sessions.time='$thetime'");
+                                  
+ while($trow= mysqli_fetch_array($result1)){
+ echo "<td>" . $trow['Unit'] . "<span style='font-size:10px;color:#CC5B0A;'>AT</span>" . $trow['Name'] . "<span style='font-size:10px;color:#CC5B0A;'>BY</span>" . $trow['Title'] . " " . $trow['First_Name'] . " ";
+}
+                            }          ?>
                            
                         </tbody>
                     </table>
