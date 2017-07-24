@@ -39,9 +39,9 @@ require 'CORE/init.php';
                     <div class="tab-content">
                         <div id="viewschools">   
                             <?php
-                            $result = $conn->query("SELECT units.Unit_Code,units.Unit_Name,programs.Prog_name,lecturers.Title,lecturers.First_Name,lecturers.Middle_Name,lecturers.Last_Name"
-                                    . " FROM units JOIN programs on units.Prog_Id=programs.Prog_Id "
-                                    . "JOIN lecturers on units.Lecturer=lecturers.Pf_No "
+                            $result = $conn->query("SELECT units.Unit_Code,units.Unit_Name,programs.Prog_name, units.Year,units.Semester,lecturers.Title,"
+                                    . "lecturers.First_Name,lecturers.Middle_Name,lecturers.Last_Name FROM units "
+                                    . "JOIN programs on units.Prog_Id=programs.Prog_Id JOIN lecturers on units.Lecturer=lecturers.Pf_No "
                                     . "ORDER BY programs.Prog_name ASC ");
                             ?>
                             <table width="500" border="0" cellspacing="1" cellpadding="0">
@@ -55,6 +55,7 @@ require 'CORE/init.php';
                                                         <th>Program Name</th>
                                                         <th>Unit Code</th>
                                                         <th>Unit Name</th>
+                                                        <th>Level offered</th>
                                                         <th>Lecturer</th>
                                                         <th>action</th>
                                                     </tr>
@@ -69,6 +70,7 @@ require 'CORE/init.php';
                                                             <td><?php echo $row['Prog_name']; ?></td>
                                                             <td><?php echo $row['Unit_Code']; ?></td>
                                                             <td><?php echo $row['Unit_Name']; ?></td>
+                                                            <td><?php echo "Year".$row['Year']."Sem".$row['Semester'] ;?></td>
                                                             <td><?php echo $row['Title'] . " " . $row['First_Name'] . " " . $row['Middle_Name'] . " " . $row['Last_Name']; ?></td>
                                                             <td><a href='functions/deleteunit.php?id=<?php echo $row['Unit_Code']; ?>' class="btn btn-block btn-danger"> delete</a></td>
                                                         </tr>
@@ -99,6 +101,36 @@ require 'CORE/init.php';
                                         <label>Unit Code <span class="req">*ex UCI 101</span>
                                         </label>
                                         <input type="text" required autocomplete="on" name='code' style="color: #FFFFFF;" />
+                                    </div>
+                                </div>
+                                    <div class="top-row">
+                                    <div class="form-group field-wrap">
+                                        <label for="yea">Year Of Study</label>
+                                        <select name="yea" id="yea" class="form-control">
+                                            <option value="Select Year Of Study">Select Year Of Study</option>
+                                            <?php
+                                            require 'CORE/init.php';
+                                            $result3 = $conn->query("SELECT * FROM years") or die($conn->error);
+                                            while ($row = mysqli_fetch_array($result3)) {
+                                                echo "<option value='" . $row['NAME'] . "'>" . $row['NAME'];
+                                                "</option>";
+                                            }
+                                            ?>        
+                                        </select>
+                                    </div>
+                                     <div class="form-group field-wrap">
+                                        <label for="sem">Program</label>
+                                        <select name="sem" id="prog" class="form-control">
+                                            <option value="Select School">Select Semester</option>
+                                            <?php
+                                            require 'CORE/init.php';
+                                            $result4 = $conn->query("SELECT * FROM semesters") or die($conn->error);
+                                            while ($row = mysqli_fetch_array($result4)) {
+                                                echo "<option value='" . $row['NAME'] . "'>" . $row['NAME'];
+                                                "</option>";
+                                            }
+                                            ?>        
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="top-row">
