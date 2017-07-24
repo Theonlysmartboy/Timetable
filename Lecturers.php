@@ -26,7 +26,7 @@ require 'CORE/init.php';
                     <ul style="list-style: none; float: contour;">
                         <li style="margin-bottom: 10px;"><a href="index.php"><button class="btn btn-block bg-primary">Back</button></a></li>
                         <li style="margin-bottom: 10px; margin-top: 10px;"><a href="Lecture halls.php"><button class="btn btn-block btn-success">Manage Lecture Halls </button></a></li>
-                        <li><a href="Lecturers.php"><button class="btn btn-block btn-success">Manage Lecturers </button></a></li>
+                        <li><a href="Units.php"><button class="btn btn-block btn-warning">Manage Units </button></a></li>
                     </ul>
                 </div>
             </div> 
