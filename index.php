@@ -113,11 +113,12 @@ if($user->isLoggedIn()){
             <div class="col-lg-12 text-center">
                 <a href="Test_Timetable.php" target="blank">Test Timetable</a>
               <?php
-                $querydata = $conn->query("SELECT `timetable`, `times`, `name`, `Department` FROM `timetables` ORDER BY `id` ASC;");
+              
+                $querydata = $conn->query("SELECT timetables.timetable,timetables.times, programs.Prog_name, timetables.Department FROM timetables JOIN programs ON timetables.name=programs.Prog_Id  ORDER BY `id` ASC;");
                 while( $data = $querydata->fetch_assoc() ){
                   $timetable = json_decode( $data["timetable"], true );
                   $times = json_decode( $data["times"], true );
-                  echo "<h2>" . $data["name"] . "</h2>";
+                  echo "<h2>" . $data["Prog_name"] . "</h2>";
                   echo "<h4>". $data["Department"] ."</h4>";
                   echo "<center><table class='table table-hover'>";
                   echo "<tr>";
