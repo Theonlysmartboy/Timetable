@@ -13,6 +13,7 @@ if ($user->isLoggedIn()) {
     $ownerid = escape($user->data()->id);
     if ($conn->query("SELECT `id` FROM `timetables` WHERE `id`='$ownerid';")->num_rows == 0) {
         $ownerid = $user->data()->id;
+        $program = $user->data()->Department;
     } else {
         $ownerid = $user->data()->id;
     }
@@ -108,19 +109,20 @@ if ($user->isLoggedIn()) {
                 <div class="row">
                     <div style="padding: 5px; font-weight: bold;">
                         <h3>Hi <?php echo $uname; ?>, Welcome.</h3>
+                        
                     </div>
                     <div class="col-lg-12 text-center">
                         <?php
                         if ($admin_rights == "Admin") {
                             echo ' <a href="Test_Timetable.php" target="blank">Test Timetable</a>';
-                            $querydata = $conn->query("SELECT timetables.timetable,timetables.times, programs.Prog_name, timetables.Department FROM timetables JOIN programs ON timetables.name=programs.Prog_Id  ORDER BY `id` ASC;");
+                            $querydata = $conn->query("SELECT timetables.timetable,timetables.times, programs.Prog_name, timetables.year,timetables.Semester FROM timetables JOIN programs ON timetables.name=programs.Prog_Id  ORDER BY `id` ASC;");
                             while ($data = $querydata->fetch_assoc()) {
                                 $timetable = json_decode($data["timetable"], true);
                                 $times = json_decode($data["times"], true);
                                 echo "<h2>" . $data["Prog_name"] . "</h2>";
-                                echo "<h4>" . $data["Department"] . "</h4>";
+                                echo "<h4 class=''>Year " . $data["year"] ." Sem ".$data["Semester"]. "</h4>";
                                 echo "<center><table class='table table-hover'>";
-                                echo "<tr>";
+                                echo "<tr class='bg-warning'>";
                                 echo "<th>Day</th>";
                                 foreach ($times as $time) {
                                     echo "<th class='text-center'>" . $time[0] . " - " . $time[1] . "</th>";
@@ -148,6 +150,39 @@ if ($user->isLoggedIn()) {
                             }
                         } else {
                             
+                            $querydata = $conn->query("SELECT timetables.timetable,timetables.times, programs.Prog_name,timetables.year,timetables.Semester FROM timetables JOIN programs ON timetables.name=programs.Prog_Id WHERE timetables.name=$program ORDER BY `id` ASC;") or die($conn->error);
+                            while ($data = $querydata->fetch_assoc()) {
+                                $timetable = json_decode($data["timetable"], true);
+                                $times = json_decode($data["times"], true);
+                                echo "<h2>" . $data["Prog_name"] . "</h2>";
+                                echo "<h4 class=''>Year " . $data["year"] ." Sem ".$data["Semester"]. "</h4>";
+                                echo "<center><table class='table table-hover'>";
+                                echo "<tr class='bg-warning'>";
+                                echo "<th>Day</th>";
+                                foreach ($times as $time) {
+                                    echo "<th class='text-center'>" . $time[0] . " - " . $time[1] . "</th>";
+                                }
+                                echo "</tr>";
+                                $dayNum = 0;
+                                foreach ($timetable as $day) {
+                                    echo "<tr>";
+                                    echo "<td><b>" . jddayofweek($dayNum, 2) . "</b></td>";
+                                    $dayNum++;
+                                    foreach ($day as $lesson) {
+                                        echo "<td class='text-center'>";
+                                        echo $lesson["lesson"];
+                                        if (isset($lesson["teacher"])) {
+                                            echo " <span class='text-danger'>By</span> " . $lesson["teacher"];
+                                        }
+                                        if (isset($lesson["location"])) {
+                                            echo " <span class='text-danger'>At</span> LH" . $lesson["location"];
+                                        }
+                                        echo "</td>";
+                                    }
+                                    echo "</tr>";
+                                }
+                                echo "</table></center>";
+                            }
                         }
                         ?>
                     </div>
