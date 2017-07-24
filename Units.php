@@ -26,7 +26,7 @@ require 'CORE/init.php';
                     <ul style="list-style: none; float: contour;">
                         <li style="margin-bottom: 10px;"><a href="index.php"><button class="btn btn-block bg-primary">Back</button></a></li>
                         <li style="margin-bottom: 10px; margin-top: 10px;"><a href="Lecture halls.php"><button class="btn btn-block btn-success">Manage Lecture Halls </button></a></li>
-                        <li><a href="Lecturers.php"><button class="btn btn-block btn-success">Manage Lecturers </button></a></li>
+                        <li><a href="Lecturers.php"><button class="btn btn-block btn-warning">Manage Lecturers </button></a></li>
                     </ul>
                 </div>
             </div> 
@@ -120,7 +120,7 @@ require 'CORE/init.php';
                                     </div>
                                      <div class="form-group field-wrap">
                                         <label for="sem">Program</label>
-                                        <select name="sem" id="prog" class="form-control">
+                                        <select name="sem" id="sem" class="form-control">
                                             <option value="Select School">Select Semester</option>
                                             <?php
                                             require 'CORE/init.php';
