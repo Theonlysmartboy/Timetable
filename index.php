@@ -109,7 +109,6 @@ if ($user->isLoggedIn()) {
                 <div class="row">
                     <div style="padding: 5px; font-weight: bold;">
                         <h3>Hi <?php echo $uname; ?>, Welcome.</h3>
-                        
                     </div>
                     <div class="col-lg-12 text-center">
                         <?php
@@ -120,7 +119,7 @@ if ($user->isLoggedIn()) {
                                 $timetable = json_decode($data["timetable"], true);
                                 $times = json_decode($data["times"], true);
                                 echo "<h2>" . $data["Prog_name"] . "</h2>";
-                                echo "<h4 class=''>Year " . $data["year"] ." Sem ".$data["Semester"]. "</h4>";
+                                echo "<h4 class=''>Year " . $data["year"] . " Sem " . $data["Semester"] . "</h4>";
                                 echo "<center><table class='table table-hover'>";
                                 echo "<tr class='bg-warning'>";
                                 echo "<th>Day</th>";
@@ -149,13 +148,12 @@ if ($user->isLoggedIn()) {
                                 echo "</table></center>";
                             }
                         } else {
-                            
                             $querydata = $conn->query("SELECT timetables.timetable,timetables.times, programs.Prog_name,timetables.year,timetables.Semester FROM timetables JOIN programs ON timetables.name=programs.Prog_Id WHERE timetables.name=$program ORDER BY `id` ASC;") or die($conn->error);
                             while ($data = $querydata->fetch_assoc()) {
                                 $timetable = json_decode($data["timetable"], true);
                                 $times = json_decode($data["times"], true);
                                 echo "<h2>" . $data["Prog_name"] . "</h2>";
-                                echo "<h4 class=''>Year " . $data["year"] ." Sem ".$data["Semester"]. "</h4>";
+                                echo "<h4 class=''>Year " . $data["year"] . " Sem " . $data["Semester"] . "</h4>";
                                 echo "<center><table class='table table-hover'>";
                                 echo "<tr class='bg-warning'>";
                                 echo "<th>Day</th>";
@@ -188,20 +186,14 @@ if ($user->isLoggedIn()) {
                     </div>
                 </div>
                 <!-- /.row -->
-
             </div>
             <!-- /.container -->
-
             <!-- jQuery Version 1.11.1 -->
             <script src="js/jquery.js"></script>
-
             <!-- Bootstrap Core JavaScript -->
             <script src="js/bootstrap.min.js"></script>
-
         </body>
-
     </html>
-
     <?php
 } else {
     echo '<p>You need to <a href = "login.php">login</a> or <a href ="register.php">register</a></p>';
