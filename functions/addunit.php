@@ -3,6 +3,8 @@
 $conn = mysqli_connect("127.0.0.1", "root", "", "yuni_yuni");
 $name = $conn->escape_string($_POST['name']);
 $code = $conn->escape_string($_POST['code']);
+$sem = $conn->escape_string($_POST['sem']);
+$year = $conn->escape_string($_POST['yea']);
 $prog = $conn->escape_string($_POST['prog']);
 $lec = $conn->escape_string($_POST['lec']);
 $result = $conn->query("SELECT * FROM units WHERE Unit_Code = '$code'") or die($conn->error);
@@ -13,7 +15,7 @@ if ($result->num_rows > 0) {
     echo 'The department already exists in the database!';
 } else { // Unit doesn't exist in a database, proceed...
     // active is 0 by DEFAULT (no need to include it here)
-    $sql = "INSERT INTO units (Unit_Name,Prog_Id,Unit_Code,Lecturer) VALUES ('$name','$prog','$code','$lec')";
+    $sql = "INSERT INTO units (Unit_Name,Prog_Id,Unit_Code,Year,Semester,Lecturer) VALUES ('$name','$prog','$code','$year','$sem','$lec')";
     // Add user to the database
     if ($conn->query($sql)) {
         echo 'The department has been added successfully';
