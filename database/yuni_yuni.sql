@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 12, 2017 at 05:04 PM
+-- Generation Time: Jul 24, 2017 at 02:53 PM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -82,7 +82,8 @@ CREATE TABLE `lecturers` (
 
 INSERT INTO `lecturers` (`Title`, `First_Name`, `Middle_Name`, `Last_Name`, `Pf_No`, `Dept_Id`) VALUES
 ('Mrs', 'Emmah', 'Namasi', 'Eunice', 2016, 2),
-('Mr', 'Joseph', 'Odhiambo', 'Otieno', 2017, 1);
+('Mr', 'Joseph', 'Odhiambo', 'Otieno', 2017, 1),
+('MRS.', 'Emmah', 'Nambocho', 'Wekesa', 2019, 3);
 
 -- --------------------------------------------------------
 
@@ -103,7 +104,8 @@ INSERT INTO `lecture_halls` (`Id`, `Name`) VALUES
 (1, 'LH_101'),
 (2, 'LH_102'),
 (3, 'LH_103'),
-(4, 'LH_104');
+(4, 'LH_104'),
+(6, 'LH_201');
 
 -- --------------------------------------------------------
 
@@ -114,14 +116,14 @@ INSERT INTO `lecture_halls` (`Id`, `Name`) VALUES
 CREATE TABLE `programs` (
   `Prog_name` varchar(255) NOT NULL,
   `Prog_Id` int(11) NOT NULL,
-  `Department_id` int(11) NOT NULL
+  `Department` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `programs`
 --
 
-INSERT INTO `programs` (`Prog_name`, `Prog_Id`, `Department_id`) VALUES
+INSERT INTO `programs` (`Prog_name`, `Prog_Id`, `Department`) VALUES
 ('BSCIT', 1, 1),
 ('CS', 2, 2),
 ('BED', 3, 3),
@@ -146,11 +148,29 @@ CREATE TABLE `schedules` (
 
 INSERT INTO `schedules` (`Id`, `Day`, `Session`, `Lecture_Hall`) VALUES
 (1, '1', 1, 1),
-(2, '1', 1, 2),
 (3, '2', 1, 1),
-(4, '2', 1, 2),
+(4, '2', 2, 2),
 (5, '3', 1, 1),
-(6, '3', 1, 2);
+(6, '3', 2, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `semesters`
+--
+
+CREATE TABLE `semesters` (
+  `NAME` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `semesters`
+--
+
+INSERT INTO `semesters` (`NAME`) VALUES
+(1),
+(2),
+(3);
 
 -- --------------------------------------------------------
 
@@ -200,8 +220,7 @@ CREATE TABLE `timetable` (
 --
 
 INSERT INTO `timetable` (`Id`, `Schedule`, `Unit`) VALUES
-(3, 1, 'CIT103'),
-(4, 2, 'UCI101');
+(3, 1, 'CIT103');
 
 -- --------------------------------------------------------
 
@@ -211,8 +230,9 @@ INSERT INTO `timetable` (`Id`, `Schedule`, `Unit`) VALUES
 
 CREATE TABLE `timetables` (
   `id` int(11) NOT NULL,
-  `name` text NOT NULL,
-  `Department` int(11) NOT NULL,
+  `name` int(11) NOT NULL,
+  `Semester` int(11) NOT NULL,
+  `Year` int(11) NOT NULL,
   `timetable` text NOT NULL,
   `times` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -221,11 +241,11 @@ CREATE TABLE `timetables` (
 -- Dumping data for table `timetables`
 --
 
-INSERT INTO `timetables` (`id`, `name`, `Department`, `timetable`, `times`) VALUES
-(1, 'BSCIT', 1, '[[{"lesson":"Pe","teacher":"TAC"},{"lesson":"Te","teacher":"CP","location":"19"},{"lesson":"Ms","teacher":"SRJ","location":"18"},{"lesson":"Cs","teacher":"IW","location":"19"},{"lesson":"-"},{"lesson":"-"}],[{"lesson":"Cs","teacher":"IW","location":"19"},{"lesson":"Te","teacher":"DLB","location":"19"},{"lesson":"Fp","teacher":"TAC","location":"7"},{"lesson":"-"},{"lesson":"-"},{"lesson":"Ms","teacher":"SRJ","location":"18"}],[{"lesson":"Pd","teacher":"SJH","location":"26"},{"lesson":"Ms","teacher":"SRJ","location":"18"},{"lesson":"Te","teacher":"DLB","location":"19"},{"lesson":"Cs","teacher":"IW","location":"19"},{"lesson":"Ye","teacher":"MJC","location":"5"},{"lesson":"Ye","teacher":"MJC","location":"5"}],[{"lesson":"-"},{"lesson":"Cs","teacher":"IW","location":"19"},{"lesson":"Ms","teacher":"SRJ","location":"18"},{"lesson":"Te","teacher":"CP","location":"19"},{"lesson":"Ms","teacher":"SRJ","location":"18"},{"lesson":"Cs","teacher":"IW","location":"19"}],[{"lesson":"-"},{"lesson":"Ms","teacher":"SRJ","location":"18"},{"lesson":"Te","teacher":"CP","location":"19"},{"lesson":"-"},{"lesson":"-"},{"lesson":"CS","teacher":"IW","location":"19"}]]', '[["08:15","10:05"],["10:10","11:00"],["11:25","12:15"],["12:20","13:10"],["14:00","14:50"],["14:55","15:45"]]'),
-(2, 'DBIT', 1, '[[{"lesson":"Ms","teacher":"SRJ","location":"18"},{"lesson":"-"},{"lesson":"Te","teacher":"CP","location":"19"},{"lesson":"Cs","teacher":"IW","location":"19"},{"lesson":"Ms","teacher":"SRJ","location":"18"},{"lesson":"-"}],[{"lesson":"Te","teacher":"CP","location":"19"},{"lesson":"Ms","teacher":"SRJ","location":"18"},{"lesson":"Cs","teacher":"IW","location":"19"},{"lesson":"-"},{"lesson":"-"},{"lesson":"Te","teacher":"DLB","location":"19"}],[{"lesson":"Ms","teacher":"SRJ","location":"18"},{"lesson":"Pe","teacher":"JJM"},{"lesson":"Cs","teacher":"IW","location":"19"},{"lesson":"Te","teacher":"DLB","location":"15"},{"lesson":"Ye","teacher":"MJC","location":"5"},{"lesson":"Ye","teacher":"MJC","location":"5"}],[{"lesson":"Te","teacher":"CP","location":"19"},{"lesson":"Cs","teacher":"IW","location":"19"},{"lesson":"Pd","teacher":"SJH","location":"24"},{"lesson":"Cs","teacher":"IW","location":"19"},{"lesson":"Te"},{"lesson":"Ms","teacher":"SRJ","location":"18"}],[{"lesson":"-"},{"lesson":"Ms","teacher":"SRJ","location":"18"},{"lesson":"-"},{"lesson":"Cs","teacher":"IW","location":"19"},{"lesson":"Te","teacher":"DLB","location":"15"},{"lesson":"-"}]]', '[["09:15","10:05"],["10:10","11:00"],["11:25","12:15"],["12:20","13:10"],["14:00","14:50"],["14:55","15:45"]]'),
-(3, 'BBA', 4, '[[{"lesson":"-"},{"lesson":"U6"},{"lesson":"L6"},{"lesson":"-"},{"lesson":"-"},{"lesson":"-"}],[{"lesson":"U6"},{"lesson":"-"},{"lesson":"-"},{"lesson":"-"},{"lesson":"-"},{"lesson":"L6"}],[{"lesson":"U6"},{"lesson":"L6"},{"lesson":"-"},{"lesson":"Y11"},{"lesson":"Y10"},{"lesson":"-"}],[{"lesson":"-"},{"lesson":"Y11"},{"lesson":"L6"},{"lesson":"-"},{"lesson":"U6"},{"lesson":"Y10"}],[{"lesson":"Y10"},{"lesson":"L6"},{"lesson":"-"},{"lesson":"U6"},{"lesson":"-"},{"lesson":"-"}]]', '[["09:15","10:05"],["10:10","11:00"],["11:25","12:15"],["12:20","13:10"],["14:00","14:50"],["14:55","15:45"]]'),
-(4, 'BSPH', 4, '[[{"lesson":"L6"},{"lesson":"-"},{"lesson":"-"},{"lesson":"Y11"},{"lesson":"L6"},{"lesson":"U6"}],[{"lesson":"U6"},{"lesson":"L6"},{"lesson":"-"},{"lesson":"-"},{"lesson":"U6"},{"lesson":"-"}],[{"lesson":"L6"},{"lesson":"-"},{"lesson":"U6"},{"lesson":"-"},{"lesson":"Y11"},{"lesson":"Y10"}],[{"lesson":"Y11"},{"lesson":"U6"},{"lesson":"Y10"},{"lesson":"-"},{"lesson":"-"},{"lesson":"L6"}],[{"lesson":"U6"},{"lesson":"L6"},{"lesson":"-"},{"lesson":"-"},{"lesson":"-"},{"lesson":"-"}]]', '[["09:15","10:05"],["10:10","11:00"],["11:25","12:15"],["12:20","13:10"],["14:00","14:50"],["14:55","15:45"]]');
+INSERT INTO `timetables` (`id`, `name`, `Semester`, `Year`, `timetable`, `times`) VALUES
+(1, 1, 1, 1, '[[{"lesson":"Pe","teacher":"TAC"},{"lesson":"Te","teacher":"CP","location":"19"},{"lesson":"Ms","teacher":"SRJ","location":"18"},{"lesson":"Cs","teacher":"IW","location":"19"},{"lesson":"-"},{"lesson":"-"}],[{"lesson":"Cs","teacher":"IW","location":"19"},{"lesson":"Te","teacher":"DLB","location":"19"},{"lesson":"Fp","teacher":"TAC","location":"7"},{"lesson":"-"},{"lesson":"-"},{"lesson":"Ms","teacher":"SRJ","location":"18"}],[{"lesson":"Pd","teacher":"SJH","location":"26"},{"lesson":"Ms","teacher":"SRJ","location":"18"},{"lesson":"Te","teacher":"DLB","location":"19"},{"lesson":"Cs","teacher":"IW","location":"19"},{"lesson":"Ye","teacher":"MJC","location":"5"},{"lesson":"Ye","teacher":"MJC","location":"5"}],[{"lesson":"-"},{"lesson":"Cs","teacher":"IW","location":"19"},{"lesson":"Ms","teacher":"SRJ","location":"18"},{"lesson":"Te","teacher":"CP","location":"19"},{"lesson":"Ms","teacher":"SRJ","location":"18"},{"lesson":"Cs","teacher":"IW","location":"19"}],[{"lesson":"-"},{"lesson":"Ms","teacher":"SRJ","location":"18"},{"lesson":"Te","teacher":"CP","location":"19"},{"lesson":"-"},{"lesson":"-"},{"lesson":"CS","teacher":"IW","location":"19"}]]', '[["08:15","10:05"],["10:10","11:00"],["11:25","12:15"],["12:20","13:10"],["14:00","14:50"],["14:55","15:45"]]'),
+(2, 2, 1, 2, '[[{"lesson":"Ms","teacher":"SRJ","location":"18"},{"lesson":"-"},{"lesson":"Te","teacher":"CP","location":"19"},{"lesson":"Cs","teacher":"IW","location":"19"},{"lesson":"Ms","teacher":"SRJ","location":"18"},{"lesson":"-"}],[{"lesson":"Te","teacher":"CP","location":"19"},{"lesson":"Ms","teacher":"SRJ","location":"18"},{"lesson":"Cs","teacher":"IW","location":"19"},{"lesson":"-"},{"lesson":"-"},{"lesson":"Te","teacher":"DLB","location":"19"}],[{"lesson":"Ms","teacher":"SRJ","location":"18"},{"lesson":"Pe","teacher":"JJM"},{"lesson":"Cs","teacher":"IW","location":"19"},{"lesson":"Te","teacher":"DLB","location":"15"},{"lesson":"Ye","teacher":"MJC","location":"5"},{"lesson":"Ye","teacher":"MJC","location":"5"}],[{"lesson":"Te","teacher":"CP","location":"19"},{"lesson":"Cs","teacher":"IW","location":"19"},{"lesson":"Pd","teacher":"SJH","location":"24"},{"lesson":"Cs","teacher":"IW","location":"19"},{"lesson":"Te"},{"lesson":"Ms","teacher":"SRJ","location":"18"}],[{"lesson":"-"},{"lesson":"Ms","teacher":"SRJ","location":"18"},{"lesson":"-"},{"lesson":"Cs","teacher":"IW","location":"19"},{"lesson":"Te","teacher":"DLB","location":"15"},{"lesson":"-"}]]', '[["09:15","10:05"],["10:10","11:00"],["11:25","12:15"],["12:20","13:10"],["14:00","14:50"],["14:55","15:45"]]'),
+(3, 3, 2, 3, '[[{"lesson":"-"},{"lesson":"U6"},{"lesson":"L6"},{"lesson":"-"},{"lesson":"-"},{"lesson":"-"}],[{"lesson":"U6"},{"lesson":"-"},{"lesson":"-"},{"lesson":"-"},{"lesson":"-"},{"lesson":"L6"}],[{"lesson":"U6"},{"lesson":"L6"},{"lesson":"-"},{"lesson":"Y11"},{"lesson":"Y10"},{"lesson":"-"}],[{"lesson":"-"},{"lesson":"Y11"},{"lesson":"L6"},{"lesson":"-"},{"lesson":"U6"},{"lesson":"Y10"}],[{"lesson":"Y10"},{"lesson":"L6"},{"lesson":"-"},{"lesson":"U6"},{"lesson":"-"},{"lesson":"-"}]]', '[["09:15","10:05"],["10:10","11:00"],["11:25","12:15"],["12:20","13:10"],["14:00","14:50"],["14:55","15:45"]]'),
+(4, 4, 2, 4, '[[{"lesson":"L6"},{"lesson":"-"},{"lesson":"-"},{"lesson":"Y11"},{"lesson":"L6"},{"lesson":"U6"}],[{"lesson":"U6"},{"lesson":"L6"},{"lesson":"-"},{"lesson":"-"},{"lesson":"U6"},{"lesson":"-"}],[{"lesson":"L6"},{"lesson":"-"},{"lesson":"U6"},{"lesson":"-"},{"lesson":"Y11"},{"lesson":"Y10"}],[{"lesson":"Y11"},{"lesson":"U6"},{"lesson":"Y10"},{"lesson":"-"},{"lesson":"-"},{"lesson":"L6"}],[{"lesson":"U6"},{"lesson":"L6"},{"lesson":"-"},{"lesson":"-"},{"lesson":"-"},{"lesson":"-"}]]', '[["09:15","10:05"],["10:10","11:00"],["11:25","12:15"],["12:20","13:10"],["14:00","14:50"],["14:55","15:45"]]');
 
 -- --------------------------------------------------------
 
@@ -236,7 +256,9 @@ INSERT INTO `timetables` (`id`, `name`, `Department`, `timetable`, `times`) VALU
 CREATE TABLE `units` (
   `Unit_Name` varchar(255) NOT NULL,
   `Prog_Id` int(11) NOT NULL,
-  `Unit_Code` varchar(6) NOT NULL,
+  `Unit_Code` varchar(12) NOT NULL,
+  `Year` int(11) NOT NULL,
+  `Semester` int(11) NOT NULL,
   `Lecturer` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -244,9 +266,10 @@ CREATE TABLE `units` (
 -- Dumping data for table `units`
 --
 
-INSERT INTO `units` (`Unit_Name`, `Prog_Id`, `Unit_Code`, `Lecturer`) VALUES
-('Fundamentals Of Programming', 1, 'CIT103', 2016),
-('Introduction To IT', 1, 'UCI101', 2017);
+INSERT INTO `units` (`Unit_Name`, `Prog_Id`, `Unit_Code`, `Year`, `Semester`, `Lecturer`) VALUES
+('Introduction To teaching', 3, 'AED201', 2, 1, 2019),
+('Fundamentals Of Programming', 1, 'CIT103', 1, 1, 2016),
+('Fundamentals of IT', 1, 'UCI 101', 1, 1, 2017);
 
 -- --------------------------------------------------------
 
@@ -261,23 +284,18 @@ CREATE TABLE `users` (
   `salt` varchar(32) NOT NULL,
   `name` varchar(50) NOT NULL,
   `joined` datetime NOT NULL,
-  `group` int(11) NOT NULL
+  `group` int(11) NOT NULL,
+  `Department` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `salt`, `name`, `joined`, `group`) VALUES
-(1, 'lepski', 'b1b1ed8b20b31edd1a21172de9647bc340d70db2d5b865f825bfac0357eed0c6', '6f¬^³…µî:ýú\n²Ó9ßÜ \r-Ì;ÞÎîÑ	’–', 'Tom Lepski', '2015-11-02 05:56:32', 2),
-(2, 'sammy', '85bc72f2ae6c810dec591bc8de902fcc65b464916d233bf153f32254941c0b4e', 'Í°F~Gµ­ …?XK\nÝ«³`Ã²fd+yË	ŒÝù', 'Sammy Devia', '2015-11-03 03:10:35', 1),
-(3, 'james', 'b1b1ed8b20b31edd1a21172de9647bc340d70db2d5b865f825bfac0357eed0c6', '6f¬^³…µî:ýú ²Ó9ßÜ  -Ì;ÞÎîÑ	’–', 'James Ronald', '2017-07-04 07:08:07', 1),
-(4, 'makenzi', '45a4ffd2fa1d91cc0a3738e1997716a34606959424b0246f2bdb17764489535d', 'ˆ*”ùX	lCÇ´‰BÐ9OÑ¥?ÅFƒß€ÙŠ¸™ÀsŽ', 'Bruce Makenzi', '2017-07-04 10:07:31', 1),
-(5, 'juneclaire', '84a291ee06b31c8a22705f5679811d33a2676fcd07891ccf6ae5c4de760d09a3', 'nš"C\'¦3ŒLy!ng;Šï¦Q°„3qÛ·&÷Lu', 'juneclaire', '2017-07-05 14:59:08', 1),
-(6, 'sallyachieng', '88f31e6732cbcf0d51a2f8e4ba50c6db7d730fd2d0aeaba2b898c3b211f59d67', 'ñ$ø«x1p/käÏ­â:©£1´ü$¾özŸFž&Õ', 'sallyachieng', '2017-07-06 12:57:34', 1),
-(7, 'Venessa8', '195d76e94c1f7caba9cce4149858808180b362226907c2b9eb013f25a51baceb', '?X~ñ¾*o0˜»$0±ÑÌXòŽYçÉl=+·øìgáQ', 'Venessa8', '2017-07-06 13:37:46', 1),
-(8, 'Tosby', '34ad3d6661c73eaad2768d70af2d118fe0c229585da2a626018960bb05aa21ed', '4­b9ïØã*+\Z×»É‡Òå?d$ŸKENVZäv', 'JosÃ©ph', '2017-07-08 14:46:51', 2),
-(9, 'Test', '7b3b042e56173f3274ee91c1eecb3cdb208e07b5f508bdb1c0b6aebec8ff8d94', 'ó\Zb€ÈZt^™›öYÕ!MÓö5x:ô¶L”ï¬²', 'Test', '2017-07-10 08:15:40', 1);
+INSERT INTO `users` (`id`, `username`, `password`, `salt`, `name`, `joined`, `group`, `Department`) VALUES
+(8, 'Tosby', '34ad3d6661c73eaad2768d70af2d118fe0c229585da2a626018960bb05aa21ed', '4­b9ïØã*+\Z×»É‡Òå?d$ŸKENVZäv', 'JosÃ©ph', '2017-07-08 14:46:51', 2, 1),
+(9, 'Test', '7b3b042e56173f3274ee91c1eecb3cdb208e07b5f508bdb1c0b6aebec8ff8d94', 'ó\Zb€ÈZt^™›öYÕ!MÓö5x:ô¶L”ï¬²', 'Test', '2017-07-10 08:15:40', 1, 2),
+(10, 'uSER', '7e20a5780d6b785c0a1cee73372d435e57f3d1999b7cb77336f387af38db4ea5', ')¯¯Ðï˜ãt(÷+gM¾·š‹¯{Pt)–±£Âm:', 'jOSEPH', '2017-07-20 18:30:16', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -290,6 +308,31 @@ CREATE TABLE `user_session` (
   `user_id` int(11) NOT NULL,
   `hash` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `years`
+--
+
+CREATE TABLE `years` (
+  `NAME` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `years`
+--
+
+INSERT INTO `years` (`NAME`) VALUES
+(1),
+(2),
+(3),
+(4),
+(5),
+(6),
+(7),
+(8),
+(9);
 
 --
 -- Indexes for dumped tables
@@ -325,7 +368,7 @@ ALTER TABLE `lecture_halls`
 --
 ALTER TABLE `programs`
   ADD PRIMARY KEY (`Prog_Id`),
-  ADD KEY `Department_id` (`Department_id`);
+  ADD KEY `Department_id` (`Department`);
 
 --
 -- Indexes for table `schedules`
@@ -335,6 +378,14 @@ ALTER TABLE `schedules`
   ADD UNIQUE KEY `Id` (`Id`),
   ADD KEY `Session` (`Session`),
   ADD KEY `Lecture_Hall` (`Lecture_Hall`);
+
+--
+-- Indexes for table `semesters`
+--
+ALTER TABLE `semesters`
+  ADD PRIMARY KEY (`NAME`),
+  ADD UNIQUE KEY `NAME` (`NAME`),
+  ADD UNIQUE KEY `NAME_2` (`NAME`);
 
 --
 -- Indexes for table `sessions`
@@ -354,7 +405,9 @@ ALTER TABLE `timetable`
 -- Indexes for table `timetables`
 --
 ALTER TABLE `timetables`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `name` (`name`),
+  ADD KEY `Year` (`Year`);
 
 --
 -- Indexes for table `units`
@@ -362,19 +415,29 @@ ALTER TABLE `timetables`
 ALTER TABLE `units`
   ADD PRIMARY KEY (`Unit_Code`),
   ADD KEY `Prog_Id` (`Prog_Id`),
-  ADD KEY `Lecturer` (`Lecturer`);
+  ADD KEY `Lecturer` (`Lecturer`),
+  ADD KEY `Year` (`Year`),
+  ADD KEY `Semester` (`Semester`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `Department` (`Department`);
 
 --
 -- Indexes for table `user_session`
 --
 ALTER TABLE `user_session`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `years`
+--
+ALTER TABLE `years`
+  ADD PRIMARY KEY (`NAME`),
+  ADD UNIQUE KEY `NAME` (`NAME`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -394,7 +457,7 @@ ALTER TABLE `groups`
 -- AUTO_INCREMENT for table `lecture_halls`
 --
 ALTER TABLE `lecture_halls`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `programs`
 --
@@ -414,12 +477,12 @@ ALTER TABLE `sessions`
 -- AUTO_INCREMENT for table `timetable`
 --
 ALTER TABLE `timetable`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `user_session`
 --
@@ -439,7 +502,7 @@ ALTER TABLE `lecturers`
 -- Constraints for table `programs`
 --
 ALTER TABLE `programs`
-  ADD CONSTRAINT `programs_ibfk_1` FOREIGN KEY (`Department_id`) REFERENCES `departments` (`Department_id`);
+  ADD CONSTRAINT `programs_ibfk_1` FOREIGN KEY (`Department`) REFERENCES `departments` (`Department_id`);
 
 --
 -- Constraints for table `schedules`
@@ -452,15 +515,29 @@ ALTER TABLE `schedules`
 -- Constraints for table `timetable`
 --
 ALTER TABLE `timetable`
-  ADD CONSTRAINT `Timetable_ibfk_1` FOREIGN KEY (`Unit`) REFERENCES `units` (`Unit_Code`),
+  ADD CONSTRAINT `Timetable_ibfk_1` FOREIGN KEY (`Unit`) REFERENCES `units` (`Unit_Code`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `timetable_ibfk` FOREIGN KEY (`Schedule`) REFERENCES `schedules` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `timetables`
+--
+ALTER TABLE `timetables`
+  ADD CONSTRAINT `timetables_ibfk_1` FOREIGN KEY (`name`) REFERENCES `programs` (`Prog_Id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `units`
 --
 ALTER TABLE `units`
   ADD CONSTRAINT `Units_ibfk_1` FOREIGN KEY (`Prog_Id`) REFERENCES `programs` (`Prog_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `idx_unit_CustomizationSet` FOREIGN KEY (`Lecturer`) REFERENCES `lecturers` (`Pf_No`);
+  ADD CONSTRAINT `idx_unit_CustomizationSet` FOREIGN KEY (`Lecturer`) REFERENCES `lecturers` (`Pf_No`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `units_ibfk_2` FOREIGN KEY (`Year`) REFERENCES `years` (`NAME`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `units_ibfk_3` FOREIGN KEY (`Semester`) REFERENCES `semesters` (`NAME`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`Department`) REFERENCES `programs` (`Prog_Id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
